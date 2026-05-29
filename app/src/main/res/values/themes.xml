@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="Theme.TaskFlow" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_purple</item>
+        <item name="colorPrimaryVariant">@color/bg_dark_start</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/accent_pink</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+
+        <!-- Make status bar transparent so gradient shines through -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!-- Window background = gradient -->
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+
+        <!-- Text styling -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+
+    <!-- Splash / launcher theme (plain dark) -->
+    <style name="Theme.TaskFlow.Splash" parent="Theme.TaskFlow">
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+    </style>
+</resources>

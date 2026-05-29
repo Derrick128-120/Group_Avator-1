@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/glass_dialog_bg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI Calendar Maker"
+        android:textColor="#FFFFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a date and describe the type of day you want to have."
+        android:textColor="#CCE0E0FF"
+        android:textSize="13sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Date Selection -->
+    <Button
+        android:id="@+id/btn_maker_date"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/glass_input_bg"
+        android:text="Select Date: Today"
+        android:textColor="#FFFFFFFF"
+        android:gravity="start|center_vertical"
+        android:paddingStart="14dp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Goal Input -->
+    <EditText
+        android:id="@+id/et_maker_goal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="80dp"
+        android:background="@drawable/glass_input_bg"
+        android:hint="e.g., A productive day for learning coding"
+        android:textColorHint="#66FFFFFF"
+        android:textColor="#FFFFFFFF"
+        android:textSize="15sp"
+        android:padding="14dp"
+        android:gravity="top"
+        android:inputType="textCapSentences|textMultiLine"
+        android:layout_marginBottom="24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btn_maker_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_cancel_bg"
+            android:text="Cancel"
+            android:textColor="#CCE0E0FF"
+            android:layout_marginEnd="12dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:stateListAnimator="@null" />
+
+        <Button
+            android:id="@+id/btn_maker_generate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/btn_primary_bg"
+            android:text="Build My Calendar"
+            android:textColor="#FFFFFFFF"
+            android:textStyle="bold"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+</LinearLayout>

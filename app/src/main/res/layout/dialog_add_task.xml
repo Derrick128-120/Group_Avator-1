@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Full custom glass dialog with tiger background -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/glass_dialog_bg">
+
+    <!-- The user's tiger image -->
+    <ImageView
+        android:id="@+id/iv_dialog_tiger_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:alpha="0.15"
+        android:src="@drawable/tiger_bg"
+        android:contentDescription="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Dialog title -->
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Task"
+            android:textColor="#FFFFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:letterSpacing="0.03" />
+
+        <!-- Task title label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Task Title"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Task title input (glass styled) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <EditText
+                android:id="@+id/et_task_title"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/glass_input_bg"
+                android:hint="e.g. Finish assignment…"
+                android:textColorHint="#66FFFFFF"
+                android:textColor="#FFFFFFFF"
+                android:textSize="15sp"
+                android:paddingStart="14dp"
+                android:paddingEnd="50dp"
+                android:inputType="textCapSentences"
+                android:maxLines="1" />
+
+            <ImageButton
+                android:id="@+id/btn_voice"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_btn_speak_now"
+                android:tint="#FFFFFFFF"
+                android:contentDescription="Voice input" />
+        </RelativeLayout>
+
+        <!-- Priority label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Priority"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Priority spinner -->
+        <Spinner
+            android:id="@+id/spinner_priority"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="20dp"
+            android:popupBackground="#1A1A2E" />
+
+        <!-- Task Type label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_type_label"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Task Type spinner -->
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="20dp"
+            android:popupBackground="#1A1A2E" />
+
+        <!-- Location label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location (Optional)"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Location input -->
+        <EditText
+            android:id="@+id/et_task_location"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:hint="e.g. Central Park"
+            android:textColorHint="#66FFFFFF"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="20dp"
+            android:inputType="textPostalAddress"
+            android:maxLines="1" />
+
+        <!-- Recurrence label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repeat"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Recurrence spinner -->
+        <Spinner
+            android:id="@+id/spinner_recurrence"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="20dp"
+            android:popupBackground="#1A1A2E" />
+
+        <!-- Alarm time label -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alarm_time_label"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Alarm time picker button -->
+        <Button
+            android:id="@+id/btn_pick_time"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:text="@string/set_alarm_time"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="12dp"
+            android:textAllCaps="false" />
+
+        <!-- Sound picker button -->
+        <Button
+            android:id="@+id/btn_pick_sound"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:text="Select Alarm Sound"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="28dp"
+            android:textAllCaps="false" />
+
+        <!-- Action buttons row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <!-- Cancel -->
+            <Button
+                android:id="@+id/btn_dialog_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_cancel_bg"
+                android:text="Cancel"
+                android:textColor="#CCE0E0FF"
+                android:textSize="14sp"
+                android:layout_marginEnd="12dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:stateListAnimator="@null" />
+
+            <!-- Add / Save -->
+            <Button
+                android:id="@+id/btn_dialog_add"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_primary_bg"
+                android:text="Add"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:stateListAnimator="@null" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

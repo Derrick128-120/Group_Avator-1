@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TaskFlow</string>
+    <string name="add_task">Add Task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="task_hint">e.g. Finish assignment…</string>
+    <string name="task_title_label">Task Title</string>
+    <string name="priority_label">Priority</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="empty_error">Task title cannot be empty</string>
+    <string name="long_press_hint">Long-press a task to edit it</string>
+    <string name="content_desc_delete">Delete task</string>
+    <string name="content_desc_edit">Edit task</string>
+    <string name="content_desc_fab">Add new task</string>
+    <string name="task_type_label">Task Type</string>
+    <string name="alarm_time_label">Alarm Time</string>
+    <string name="set_alarm_time">Set Alarm Time</string>
+    <string name="alarm_format">Alarm: %1$s</string>
+    <string name="task_reminder">TASK REMINDER</string>
+    <string name="btn_dismiss">DISMISS</string>
+    <string name="alarm_set_toast">Alarm set for task</string>
+    <string name="alarm_item_prefix">⏰ %1$s</string>
+</resources>

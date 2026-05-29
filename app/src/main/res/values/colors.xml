@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand / background -->
+    <color name="bg_dark_start">#0D0D1A</color>
+    <color name="bg_dark_end">#1A0533</color>
+    <color name="accent_purple">#0052A5</color>
+    <color name="accent_pink">#00BFFF</color>
+    <color name="logo_blue_dark">#0052A5</color>
+    <color name="logo_blue_light">#00BFFF</color>
+
+    <!-- Glass layers -->
+    <color name="glass_fill">#33FFFFFF</color>
+    <color name="glass_border">#59FFFFFF</color>
+
+    <!-- Text -->
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#B3FFFFFF</color>
+    <color name="text_hint">#66FFFFFF</color>
+
+    <!-- Priority dots -->
+    <color name="priority_high">#FF6B6B</color>
+    <color name="priority_medium">#FFD93D</color>
+    <color name="priority_low">#6BCB77</color>
+
+    <!-- System bars (for themes.xml) -->
+    <color name="colorPrimary">#7B2FBE</color>
+    <color name="colorPrimaryDark">#0D0D1A</color>
+    <color name="colorAccent">#E040FB</color>
+</resources>
