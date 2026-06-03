@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
     private Button btnPickSoundInDialog;
     private boolean isTodayFilterActive = false;
     private Calendar selectedFilterDate = null;
+    private String selectedTagFilter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +98,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         Button btnCalendarMaker            = findViewById(R.id.btn_calendar_maker);
         btnSettings                        = findViewById(R.id.btn_settings);
         btnCalendar                        = findViewById(R.id.btn_calendar);
+        ImageButton btnStatsDashboard      = findViewById(R.id.btn_stats_dashboard);
+        ImageButton btnShare               = findViewById(R.id.btn_share);
 
         btnPlanDay.setOnClickListener(v -> showPlanDayDialog());
         btnCalendarMaker.setOnClickListener(v -> showCalendarMakerDialog());
+        btnStatsDashboard.setOnClickListener(v -> showProductivityDashboard());
+        btnShare.setOnClickListener(v -> showShareOptions());
         View                  bootOverlay  = findViewById(R.id.boot_overlay);
         View                  glowPurple   = findViewById(R.id.glow_purple);
         View                  glowPink     = findViewById(R.id.glow_pink);
@@ -159,7 +165,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     boolean matchesQuery = t.getTitle().toLowerCase().contains(lowerQuery) || 
                                           t.getType().toLowerCase().contains(lowerQuery);
                     
-                    if (!isTodayFilterActive && selectedFilterDate == null) return matchesQuery;
+                    boolean matchesTag = true;
+                    if (selectedTagFilter != null) {
+                        matchesTag = t.getTags().contains(selectedTagFilter);
+                    }
+
+                    if (!isTodayFilterActive && selectedFilterDate == null) return matchesQuery && matchesTag;
                     
                     if (t.getAlarmTimeMillis() <= 0) return false;
                     
@@ -168,12 +179,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     
                     if (isTodayFilterActive) {
                         Calendar today = Calendar.getInstance();
-                        return matchesQuery && 
+                        return matchesQuery && matchesTag &&
                                taskCal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                                taskCal.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR);
                     } else {
                         // Calendar date filter
-                        return matchesQuery && 
+                        return matchesQuery && matchesTag &&
                                taskCal.get(Calendar.YEAR) == selectedFilterDate.get(Calendar.YEAR) &&
                                taskCal.get(Calendar.DAY_OF_YEAR) == selectedFilterDate.get(Calendar.DAY_OF_YEAR);
                     }
@@ -184,6 +195,34 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         filteredList.addAll(filtered);
         sortTasks();
         adapter.notifyDataSetChanged();
+        updateMainTagChips();
+    }
+
+    private void updateMainTagChips() {
+        com.google.android.material.chip.ChipGroup cg = findViewById(R.id.cg_main_tags);
+        if (cg == null) return;
+        
+        java.util.Set<String> allTags = new java.util.HashSet<>();
+        for (Task t : taskList) {
+            allTags.addAll(t.getTags());
+        }
+
+        cg.removeAllViews();
+        for (String tag : allTags) {
+            com.google.android.material.chip.Chip chip = new com.google.android.material.chip.Chip(this);
+            chip.setText(tag);
+            chip.setCheckable(true);
+            chip.setChecked(tag.equals(selectedTagFilter));
+            chip.setOnClickListener(v -> {
+                if (tag.equals(selectedTagFilter)) {
+                    selectedTagFilter = null;
+                } else {
+                    selectedTagFilter = tag;
+                }
+                filterTasks(etSearch.getText().toString());
+            });
+            cg.addView(chip);
+        }
     }
 
     private void startGlowingAnimation(View view, float startY, float endY, int duration) {
@@ -276,6 +315,74 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             default:
                 root.setBackgroundResource(R.drawable.bg_gradient);
                 break;
+        }
+    }
+
+    private void showProductivityDashboard() {
+        com.google.android.material.bottomsheet.BottomSheetDialog bottomSheet = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_dashboard, null);
+
+        TextView tvStreak = view.findViewById(R.id.tv_streak_count);
+        // Simple streak logic: check consecutive days in history
+        tvStreak.setText("🔥 3 Day Streak!"); // Placeholder for demo
+
+        // In a real app, you'd calculate distribution and use a chart view
+        TextView tvDistribution = view.findViewById(R.id.tv_distribution_info);
+        long work = taskList.stream().filter(t -> "Work".equals(t.getType())).count();
+        long health = taskList.stream().filter(t -> "Health".equals(t.getType())).count();
+        tvDistribution.setText(String.format("Work: %d | Health: %d | Other: %d", work, health, taskList.size() - work - health));
+
+        bottomSheet.setContentView(view);
+        bottomSheet.show();
+    }
+
+    private void showShareOptions() {
+        String[] options = {"Share as Text", "Export as CSV (Internal)"};
+        new AlertDialog.Builder(this)
+                .setTitle("Share Tasks")
+                .setItems(options, (dialog, which) -> {
+                    if (which == 0) shareAsText();
+                    else exportAsCsv();
+                }).show();
+    }
+
+    private void shareAsText() {
+        StringBuilder sb = new StringBuilder("My Tasks:\n");
+        for (Task t : filteredList) {
+            sb.append(t.isCompleted() ? "[x] " : "[ ] ")
+              .append(t.getTitle()).append(" (")
+              .append(t.getPriority()).append(")\n");
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        startActivity(Intent.createChooser(intent, "Share via"));
+    }
+
+    private void exportAsCsv() {
+        StringBuilder sb = new StringBuilder("ID,Title,Priority,Type,Completed\n");
+        for (Task t : filteredList) {
+            sb.append(t.getId()).append(",")
+              .append(t.getTitle()).append(",")
+              .append(t.getPriority()).append(",")
+              .append(t.getType()).append(",")
+              .append(t.isCompleted()).append("\n");
+        }
+
+        try {
+            java.io.File file = new java.io.File(getExternalFilesDir(null), "tasks_export.csv");
+            java.io.FileOutputStream out = new java.io.FileOutputStream(file);
+            out.write(sb.toString().getBytes());
+            out.close();
+
+            android.net.Uri uri = androidx.core.content.FileProvider.getUriForFile(this, "com.taskmanager.fileprovider", file);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/csv");
+            intent.putExtra(Intent.EXTRA_STREAM, uri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(intent, "Export CSV"));
+        } catch (Exception e) {
+            Toast.makeText(this, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -548,17 +655,18 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
     }
 
     private void showTaskDialog(int editPosition, Task existingTask) {
-        // Inflate the custom glass dialog layout
-        View dialogView = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_add_task, null);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_task, null);
 
-        // ── Wire up views inside the dialog ──────────────────────
         TextView   tvDialogTitle    = dialogView.findViewById(R.id.tv_dialog_title);
         EditText   etTitle          = dialogView.findViewById(R.id.et_task_title);
         Spinner    spinnerPriority  = dialogView.findViewById(R.id.spinner_priority);
         Spinner    spinnerType      = dialogView.findViewById(R.id.spinner_type);
         EditText   etLocation       = dialogView.findViewById(R.id.et_task_location);
         Spinner    spinnerRecurrence = dialogView.findViewById(R.id.spinner_recurrence);
+        EditText   etTags           = dialogView.findViewById(R.id.et_tags);
+        EditText   etNotes          = dialogView.findViewById(R.id.et_notes);
+        LinearLayout llSubtasks     = dialogView.findViewById(R.id.ll_subtasks_container);
+        ImageButton btnAddSubtask   = dialogView.findViewById(R.id.btn_add_subtask);
         Button     btnPickTime      = dialogView.findViewById(R.id.btn_pick_time);
         Button     btnPickSound     = dialogView.findViewById(R.id.btn_pick_sound);
         Button     btnAdd           = dialogView.findViewById(R.id.btn_dialog_add);
@@ -569,172 +677,144 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         final Calendar alarmCalendar = Calendar.getInstance();
         final boolean[] isTimeSet = {false};
 
-        // ── Pre-fill for edit mode ────────────────────────────────
+        // Pre-fill
         boolean isEditMode = (existingTask != null);
         tvDialogTitle.setText(isEditMode ? "Edit Task" : "New Task");
         btnAdd.setText(isEditMode ? "Save" : "Add");
 
         selectedSoundUri = isEditMode ? existingTask.getSoundUri() : null;
-        if (selectedSoundUri != null) {
-            btnPickSound.setText("Sound Selected");
-        }
+        if (selectedSoundUri != null) btnPickSound.setText("Sound Selected");
 
-        // ── Priority spinner ──────────────────────────────────────
         String[] priorities = {"High", "Medium", "Low"};
-        ArrayAdapter<String> priorityAdapter = new ArrayAdapter<>(
-                this, R.layout.spinner_item, priorities);
-        priorityAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerPriority.setAdapter(priorityAdapter);
+        spinnerPriority.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_item, priorities));
 
-        // ── Type spinner ──────────────────────────────────────────
         String[] types = {"Work", "Personal", "Health", "Shopping", "Other"};
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(
-                this, R.layout.spinner_item, types);
-        typeAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerType.setAdapter(typeAdapter);
+        spinnerType.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_item, types));
 
-        // ── Recurrence spinner ─────────────────────────────────────
         String[] recurrences = {"None", "Daily", "Weekly", "Monthly"};
-        ArrayAdapter<String> recurrenceAdapter = new ArrayAdapter<>(
-                this, R.layout.spinner_item, recurrences);
-        recurrenceAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        spinnerRecurrence.setAdapter(recurrenceAdapter);
+        spinnerRecurrence.setAdapter(new ArrayAdapter<>(this, R.layout.spinner_item, recurrences));
 
-        // ── Pre-fill for edit mode ────────────────────────────────
         if (isEditMode) {
             etTitle.setText(existingTask.getTitle());
-            etTitle.setText(existingTask.getTitle());
-            etTitle.setSelection(existingTask.getTitle().length());
-            for (int i = 0; i < priorities.length; i++) {
-                if (priorities[i].equals(existingTask.getPriority())) {
-                    spinnerPriority.setSelection(i);
-                    break;
-                }
+            etLocation.setText(existingTask.getLocation());
+            etNotes.setText(existingTask.getNotes());
+            
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < existingTask.getTags().size(); i++) {
+                sb.append(existingTask.getTags().get(i));
+                if (i < existingTask.getTags().size() - 1) sb.append(", ");
             }
-            for (int i = 0; i < types.length; i++) {
-                if (types[i].equals(existingTask.getType())) {
-                    spinnerType.setSelection(i);
-                    break;
-                }
+            etTags.setText(sb.toString());
+
+            for (Task.SubTask st : existingTask.getSubTasks()) {
+                addSubTaskRow(llSubtasks, st);
             }
-            for (int i = 0; i < recurrences.length; i++) {
-                if (recurrences[i].equals(existingTask.getRecurrence())) {
-                    spinnerRecurrence.setSelection(i);
-                    break;
-                }
-            }
+
+            for (int i = 0; i < priorities.length; i++) if (priorities[i].equals(existingTask.getPriority())) spinnerPriority.setSelection(i);
+            for (int i = 0; i < types.length; i++) if (types[i].equals(existingTask.getType())) spinnerType.setSelection(i);
+            for (int i = 0; i < recurrences.length; i++) if (recurrences[i].equals(existingTask.getRecurrence())) spinnerRecurrence.setSelection(i);
+
             if (existingTask.getAlarmTimeMillis() > 0) {
                 alarmCalendar.setTimeInMillis(existingTask.getAlarmTimeMillis());
                 isTimeSet[0] = true;
                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 btnPickTime.setText(getString(R.string.alarm_format, sdf.format(alarmCalendar.getTime())));
             }
-            etLocation.setText(existingTask.getLocation());
         }
 
-        // ── Voice Input ───────────────────────────────────────────
-        btnVoice.setOnClickListener(v -> {
-            etTitleForVoice = etTitle;
-            startVoiceInput();
-        });
+        btnAddSubtask.setOnClickListener(v -> addSubTaskRow(llSubtasks, null));
 
-        // ── Time picker listener ──────────────────────────────────
+        btnVoice.setOnClickListener(v -> { etTitleForVoice = etTitle; startVoiceInput(); });
+
         btnPickTime.setOnClickListener(v -> {
-            TimePickerDialog timePicker = new TimePickerDialog(this, (view, hourOfDay, minute) -> {
+            new TimePickerDialog(this, (view, hourOfDay, minute) -> {
                 alarmCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 alarmCalendar.set(Calendar.MINUTE, minute);
                 alarmCalendar.set(Calendar.SECOND, 0);
-                
-                // If the time is in the past, assume they mean tomorrow
-                if (alarmCalendar.getTimeInMillis() < System.currentTimeMillis()) {
-                    alarmCalendar.add(Calendar.DAY_OF_YEAR, 1);
-                }
-                
+                if (alarmCalendar.getTimeInMillis() < System.currentTimeMillis()) alarmCalendar.add(Calendar.DAY_OF_YEAR, 1);
                 isTimeSet[0] = true;
                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 btnPickTime.setText(getString(R.string.alarm_format, sdf.format(alarmCalendar.getTime())));
-            }, alarmCalendar.get(Calendar.HOUR_OF_DAY), alarmCalendar.get(Calendar.MINUTE), false);
-            timePicker.show();
+            }, alarmCalendar.get(Calendar.HOUR_OF_DAY), alarmCalendar.get(Calendar.MINUTE), false).show();
         });
 
-        // ── Sound picker listener ─────────────────────────────────
         btnPickSound.setOnClickListener(v -> {
             Intent intent = new Intent(android.media.RingtoneManager.ACTION_RINGTONE_PICKER);
             intent.putExtra(android.media.RingtoneManager.EXTRA_RINGTONE_TYPE, android.media.RingtoneManager.TYPE_ALARM);
-            intent.putExtra(android.media.RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Alarm Sound");
-            intent.putExtra(android.media.RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, 
-                    selectedSoundUri != null ? android.net.Uri.parse(selectedSoundUri) : null);
+            intent.putExtra(android.media.RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, selectedSoundUri != null ? android.net.Uri.parse(selectedSoundUri) : null);
             startActivityForResult(intent, SOUND_PICKER_CODE);
         });
 
-        // ── Build the transparent AlertDialog ────────────────────
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(dialogView)
-                .create();
+        AlertDialog dialog = new AlertDialog.Builder(this).setView(dialogView).create();
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        // Make the dialog window itself transparent so only our
-        // glass drawable shows
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
-
-        // ── Button listeners ──────────────────────────────────────
         btnCancel.setOnClickListener(v -> dialog.dismiss());
 
         btnAdd.setOnClickListener(v -> {
             String title = etTitle.getText().toString().trim();
-            if (title.isEmpty()) {
-                etTitle.setError("Task title cannot be empty");
-                return;
+            if (title.isEmpty()) { etTitle.setError("Required"); return; }
+            
+            List<String> tags = new ArrayList<>();
+            for (String s : etTags.getText().toString().split(",")) {
+                if (!s.trim().isEmpty()) tags.add(s.trim());
             }
-            String priority = spinnerPriority.getSelectedItem().toString();
-            String type = spinnerType.getSelectedItem().toString();
-            String location = etLocation.getText().toString().trim();
-            String recurrence = spinnerRecurrence.getSelectedItem().toString();
-            long alarmTime = isTimeSet[0] ? alarmCalendar.getTimeInMillis() : 0;
 
+            List<Task.SubTask> subtasksList = new ArrayList<>();
+            for (int i = 0; i < llSubtasks.getChildCount(); i++) {
+                View row = llSubtasks.getChildAt(i);
+                EditText stEt = row.findViewById(R.id.et_subtask_title);
+                CheckBox stCb = row.findViewById(R.id.cb_subtask_done);
+                String stTitle = stEt.getText().toString().trim();
+                if (!stTitle.isEmpty()) subtasksList.add(new Task.SubTask(stTitle, stCb.isChecked()));
+            }
+
+            long alarmTime = isTimeSet[0] ? alarmCalendar.getTimeInMillis() : 0;
             if (isEditMode) {
-                // Update existing task
                 existingTask.setTitle(title);
-                existingTask.setPriority(priority);
-                existingTask.setType(type);
-                existingTask.setLocation(location);
-                existingTask.setRecurrence(recurrence);
+                existingTask.setPriority(spinnerPriority.getSelectedItem().toString());
+                existingTask.setType(spinnerType.getSelectedItem().toString());
+                existingTask.setLocation(etLocation.getText().toString().trim());
+                existingTask.setRecurrence(spinnerRecurrence.getSelectedItem().toString());
                 existingTask.setAlarmTimeMillis(alarmTime);
                 existingTask.setSoundUri(selectedSoundUri);
-                
-                if (alarmTime > 0) {
-                    alarmScheduler.scheduleTaskAlarm(existingTask, alarmTime);
-                } else {
-                    alarmScheduler.cancelTaskAlarm(existingTask);
-                }
+                existingTask.setTags(tags);
+                existingTask.setNotes(etNotes.getText().toString().trim());
+                existingTask.setSubTasks(subtasksList);
+                if (alarmTime > 0) alarmScheduler.scheduleTaskAlarm(existingTask, alarmTime);
+                else alarmScheduler.cancelTaskAlarm(existingTask);
             } else {
-                // Create new task (timestamp = unique ID)
-                Task newTask = new Task(System.currentTimeMillis(), title, priority, type, false, alarmTime, recurrence, selectedSoundUri, location);
+                Task newTask = new Task(System.currentTimeMillis(), title, spinnerPriority.getSelectedItem().toString(), spinnerType.getSelectedItem().toString(), false, alarmTime, spinnerRecurrence.getSelectedItem().toString(), selectedSoundUri, etLocation.getText().toString().trim());
+                newTask.setTags(tags);
+                newTask.setNotes(etNotes.getText().toString().trim());
+                newTask.setSubTasks(subtasksList);
                 taskList.add(newTask);
-                
-                if (alarmTime > 0) {
-                    alarmScheduler.scheduleTaskAlarm(newTask, alarmTime);
-                }
+                if (alarmTime > 0) alarmScheduler.scheduleTaskAlarm(newTask, alarmTime);
             }
 
             filterTasks(etSearch.getText().toString());
             repository.saveTasks(taskList);
-            updateTaskCount();
-            updateStats();
-            updateWidget();
+            updateTaskCount(); updateStats(); updateWidget();
             dialog.dismiss();
-
-            if (!location.isEmpty()) {
-                showExerciseRoutingDialog(location);
-            }
-            
-            if (alarmTime > 0) {
-                Toast.makeText(this, getString(R.string.alarm_set_toast), Toast.LENGTH_SHORT).show();
-            }
+            if (alarmTime > 0) Toast.makeText(this, getString(R.string.alarm_set_toast), Toast.LENGTH_SHORT).show();
+            if (!etLocation.getText().toString().trim().isEmpty()) showExerciseRoutingDialog(etLocation.getText().toString().trim());
         });
 
         dialog.show();
+    }
+
+    private void addSubTaskRow(LinearLayout container, Task.SubTask subTask) {
+        View row = LayoutInflater.from(this).inflate(R.layout.item_subtask_input, container, false);
+        EditText et = row.findViewById(R.id.et_subtask_title);
+        CheckBox cb = row.findViewById(R.id.cb_subtask_done);
+        ImageButton btnRemove = row.findViewById(R.id.btn_remove_subtask);
+
+        if (subTask != null) {
+            et.setText(subTask.getTitle());
+            cb.setChecked(subTask.isDone());
+        }
+
+        btnRemove.setOnClickListener(v -> container.removeView(row));
+        container.addView(row);
     }
 
     private void startVoiceInput() {

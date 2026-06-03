@@ -73,7 +73,27 @@
                     android:textColor="#00BFFF"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_marginEnd="16dp" />
+                    android:layout_marginEnd="12dp" />
+
+                <ImageButton
+                    android:id="@+id/btn_share"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_share"
+                    app:tint="#FFFFFFFF"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Share" />
+
+                <ImageButton
+                    android:id="@+id/btn_stats_dashboard"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_sort_by_size"
+                    app:tint="#FFFFFFFF"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="Stats" />
 
                 <ImageButton
                     android:id="@+id/btn_settings"
@@ -153,6 +173,19 @@
                 android:tint="#FFFFFFFF"
                 android:contentDescription="Calendar" />
         </LinearLayout>
+
+        <!-- Tag Filter Chips -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_main_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true" />
+        </HorizontalScrollView>
 
         <!-- Search Bar -->
         <EditText

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/glass_dialog_bg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Productivity Stats"
+        android:textColor="#FFFFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tv_streak_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔥 0 Day Streak"
+        android:textColor="#FFD93D"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Distribution"
+        android:textColor="#CCE0E0FF"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tv_distribution_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading stats..."
+        android:textColor="#FFFFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Placeholder for Chart -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#1AFFFFFF"
+        android:layout_marginBottom="24dp" />
+
+</LinearLayout>

@@ -61,6 +61,17 @@
         android:contentDescription="@string/task_reminder"
         android:alpha="0.8" />
 
+    <TextView
+        android:id="@+id/tv_auto_dismiss_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_alarm_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:textColor="#80CCE0E0"
+        android:textSize="12sp"
+        android:text="Auto-dismissing in 60s" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

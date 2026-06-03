@@ -98,6 +98,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.tvAlarmTime.setVisibility(View.GONE);
         }
 
+        // --- Sub-task progress ---
+        if (task.getSubTasks() != null && !task.getSubTasks().isEmpty()) {
+            long done = task.getSubTasks().stream().filter(Task.SubTask::isDone).count();
+            holder.tvSubtaskProgress.setText(done + "/" + task.getSubTasks().size() + " sub-tasks done");
+            holder.tvSubtaskProgress.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvSubtaskProgress.setVisibility(View.GONE);
+        }
+
         // --- Location ---
         if (task.getLocation() != null && !task.getLocation().isEmpty()) {
             holder.tvLocation.setText(task.getLocation());
@@ -131,7 +140,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     //  ViewHolder
     // -------------------------------------------------------
     static class TaskViewHolder extends RecyclerView.ViewHolder {
-        TextView    tvTitle, tvPriority, tvAlarmTime, tvLocation;
+        TextView    tvTitle, tvPriority, tvAlarmTime, tvLocation, tvSubtaskProgress;
         CheckBox    cbComplete;
         ImageButton btnDelete, btnEdit;
 
@@ -141,6 +150,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             tvPriority = itemView.findViewById(R.id.tv_priority);
             tvAlarmTime = itemView.findViewById(R.id.tv_alarm_time);
             tvLocation = itemView.findViewById(R.id.tv_location);
+            tvSubtaskProgress = itemView.findViewById(R.id.tv_subtask_progress);
             cbComplete = itemView.findViewById(R.id.cb_complete);
             btnDelete  = itemView.findViewById(R.id.btn_delete);
             btnEdit    = itemView.findViewById(R.id.btn_edit);

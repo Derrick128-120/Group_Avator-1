@@ -19,6 +19,9 @@ public class TaskAlarmActivity extends AppCompatActivity {
 
     private Ringtone ringtone;
     private Vibrator vibrator;
+    private int secondsLeft = 60;
+    private android.os.Handler timerHandler = new android.os.Handler();
+    private TextView tvTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,9 @@ public class TaskAlarmActivity extends AppCompatActivity {
         TextView tvTaskName = findViewById(R.id.tv_task_name);
         tvTaskName.setText(taskTitle != null ? taskTitle : "Task Due!");
 
+        tvTimer = findViewById(R.id.tv_auto_dismiss_timer);
+        startCountdown();
+
         Button btnDismiss = findViewById(R.id.btn_dismiss);
         btnDismiss.setOnClickListener(v -> {
             stopAlarm();
@@ -57,13 +63,39 @@ public class TaskAlarmActivity extends AppCompatActivity {
 
         Button btnSnooze = findViewById(R.id.btn_snooze);
         btnSnooze.setOnClickListener(v -> {
-            stopAlarm();
-            cancelNotification(notificationId);
-            snoozeTask(taskId, taskTitle);
-            finish();
+            showSnoozeOptions(taskId, taskTitle, notificationId);
         });
 
         startAlarm();
+    }
+
+    private void startCountdown() {
+        timerHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (secondsLeft > 0) {
+                    secondsLeft--;
+                    if (tvTimer != null) tvTimer.setText("Auto-dismissing in " + secondsLeft + "s");
+                    timerHandler.postDelayed(this, 1000);
+                } else {
+                    stopAlarm();
+                    finish();
+                }
+            }
+        }, 1000);
+    }
+
+    private void showSnoozeOptions(long taskId, String title, int notifId) {
+        String[] options = {"5 Minutes", "10 Minutes", "15 Minutes"};
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Snooze Duration")
+                .setItems(options, (dialog, which) -> {
+                    int minutes = (which + 1) * 5;
+                    stopAlarm();
+                    cancelNotification(notifId);
+                    snoozeTask(taskId, title, minutes);
+                    finish();
+                }).show();
     }
 
     private void cancelNotification(int id) {
@@ -73,12 +105,12 @@ public class TaskAlarmActivity extends AppCompatActivity {
         }
     }
 
-    private void snoozeTask(long taskId, String title) {
+    private void snoozeTask(long taskId, String title, int minutes) {
         Task tempTask = new Task(taskId, title, "Medium", "Other", false, 0, "None", null, null);
         TaskAlarmScheduler scheduler = new TaskAlarmScheduler(this);
-        long snoozeTime = System.currentTimeMillis() + (5 * 60 * 1000); // 5 minutes
+        long snoozeTime = System.currentTimeMillis() + (minutes * 60 * 1000);
         scheduler.scheduleTaskAlarm(tempTask, snoozeTime);
-        android.widget.Toast.makeText(this, "Snoozed for 5 minutes", android.widget.Toast.LENGTH_SHORT).show();
+        android.widget.Toast.makeText(this, "Snoozed for " + minutes + " minutes", android.widget.Toast.LENGTH_SHORT).show();
     }
 
     private void startAlarm() {

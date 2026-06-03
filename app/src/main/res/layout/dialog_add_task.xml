@@ -2,6 +2,7 @@
 <!-- Full custom glass dialog with tiger background -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/glass_dialog_bg">
@@ -160,6 +161,91 @@
             android:paddingEnd="14dp"
             android:layout_marginBottom="20dp"
             android:popupBackground="#1A1A2E" />
+
+        <!-- Tags Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tags (comma separated)"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/et_tags"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/glass_input_bg"
+            android:hint="urgent, work, fun"
+            android:textColorHint="#66FFFFFF"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="12dp"
+            android:inputType="text" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:chipSpacingHorizontal="8dp" />
+
+        <!-- Notes Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textColor="#CCE0E0FF"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/et_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:background="@drawable/glass_input_bg"
+            android:hint="Add some details..."
+            android:textColorHint="#66FFFFFF"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp"
+            android:padding="14dp"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Sub-tasks Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Sub-tasks"
+                android:textColor="#CCE0E0FF"
+                android:textSize="13sp" />
+            <ImageButton
+                android:id="@+id/btn_add_subtask"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_input_add"
+                app:tint="#00BFFF"
+                android:contentDescription="Add sub-task" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_subtasks_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp" />
 
         <!-- Alarm time label -->
         <TextView

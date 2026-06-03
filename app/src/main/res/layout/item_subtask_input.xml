@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="8dp">
+
+    <CheckBox
+        android:id="@+id/cb_subtask_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="#00BFFF" />
+
+    <EditText
+        android:id="@+id/et_subtask_title"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_weight="1"
+        android:background="@drawable/glass_input_bg"
+        android:hint="Sub-task name"
+        android:textColorHint="#66FFFFFF"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:inputType="textCapSentences"
+        android:maxLines="1" />
+
+    <ImageButton
+        android:id="@+id/btn_remove_subtask"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        app:tint="#99FF6B6B"
+        android:contentDescription="Remove sub-task" />
+
+</LinearLayout>

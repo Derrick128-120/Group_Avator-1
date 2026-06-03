@@ -55,7 +55,7 @@ public class TaskRepository {
             JSONArray array = new JSONArray(json);
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                tasks.add(new Task(
+                Task task = new Task(
                         obj.getLong("id"),
                         obj.getString("title"),
                         obj.getString("priority"),
@@ -65,7 +65,34 @@ public class TaskRepository {
                         obj.optString("recurrence", "None"),
                         obj.optString("soundUri", null),
                         obj.optString("location", null)
-                ));
+                );
+                
+                // Load Tags
+                String tagsCsv = obj.optString("tags", "");
+                if (!tagsCsv.isEmpty()) {
+                    List<String> tags = new ArrayList<>();
+                    for (String t : tagsCsv.split(",")) tags.add(t.trim());
+                    task.setTags(tags);
+                }
+
+                // Load Notes
+                task.setNotes(obj.optString("notes", ""));
+
+                // Load Sub-tasks
+                JSONArray subArray = obj.optJSONArray("subTasks");
+                if (subArray != null) {
+                    List<Task.SubTask> subTasks = new ArrayList<>();
+                    for (int j = 0; j < subArray.length(); j++) {
+                        JSONObject subObj = subArray.getJSONObject(j);
+                        subTasks.add(new Task.SubTask(
+                                subObj.getString("title"),
+                                subObj.getBoolean("isDone")
+                        ));
+                    }
+                    task.setSubTasks(subTasks);
+                }
+                
+                tasks.add(task);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,6 +123,30 @@ public class TaskRepository {
                 obj.put("recurrence",   task.getRecurrence());
                 obj.put("soundUri",     task.getSoundUri());
                 obj.put("location",     task.getLocation());
+                
+                // Save Tags as CSV
+                if (task.getTags() != null && !task.getTags().isEmpty()) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < task.getTags().size(); i++) {
+                        sb.append(task.getTags().get(i));
+                        if (i < task.getTags().size() - 1) sb.append(",");
+                    }
+                    obj.put("tags", sb.toString());
+                }
+
+                // Save Notes
+                obj.put("notes", task.getNotes());
+
+                // Save Sub-tasks
+                JSONArray subArray = new JSONArray();
+                for (Task.SubTask sub : task.getSubTasks()) {
+                    JSONObject subObj = new JSONObject();
+                    subObj.put("title", sub.getTitle());
+                    subObj.put("isDone", sub.isDone());
+                    subArray.put(subObj);
+                }
+                obj.put("subTasks", subArray);
+
                 array.put(obj);
             }
             prefs.edit().putString(key, array.toString()).apply();
