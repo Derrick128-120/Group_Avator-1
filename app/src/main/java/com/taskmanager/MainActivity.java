@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         updateTaskCount();
         updateStats();
+        setRandomMotivationalQuote();
 
         // ── FAB → add dialog ─────────────────────────────────────
         fab.setOnClickListener(v -> showTaskDialog(-1, null));
@@ -440,6 +441,22 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 .show();
     }
 }
+
+    private void setRandomMotivationalQuote() {
+        TextView tvQuote = findViewById(R.id.tv_motivational_quote);
+        if (tvQuote == null) return;
+
+        String[] quotes = {
+            "Don't stop until you're proud.",
+            "Action is the foundational key to all success.",
+            "Your only limit is your mind.",
+            "Great things never come from comfort zones.",
+            "Focus on being productive instead of busy.",
+            "The secret of getting ahead is getting started."
+        };
+        int index = new java.util.Random().nextInt(quotes.length);
+        tvQuote.setText(quotes[index]);
+    }
 
     private void showSettingsDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_settings, null);

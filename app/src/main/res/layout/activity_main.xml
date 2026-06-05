@@ -57,6 +57,16 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.05" />
 
+            <TextView
+                android:id="@+id/tv_motivational_quote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make today amazing!"
+                android:textColor="#80FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_marginTop="2dp" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
