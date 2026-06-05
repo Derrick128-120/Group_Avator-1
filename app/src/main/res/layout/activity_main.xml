@@ -234,6 +234,20 @@
         app:elevation="8dp"
         app:tint="@android:color/white" />
 
+    <!-- ── Help Desk FAB ───────────────────────────────────── -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="24dp"
+        android:contentDescription="Help Desk"
+        android:src="@android:drawable/ic_menu_help"
+        app:backgroundTint="#0052A5"
+        app:borderWidth="1dp"
+        app:elevation="8dp"
+        app:tint="@android:color/white" />
+
     <!-- ── Boot Overlay ─────────────────────────────────── -->
     <RelativeLayout
         android:id="@+id/boot_overlay"

@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         // ── Views ────────────────────────────────────────────────
         RecyclerView          recyclerView = findViewById(R.id.recycler_view);
         FloatingActionButton  fab          = findViewById(R.id.fab);
+        FloatingActionButton  fabHelp      = findViewById(R.id.fab_help);
         tvTaskCount                        = findViewById(R.id.tv_task_count);
         tvStats                            = findViewById(R.id.tv_stats);
         etSearch                           = findViewById(R.id.et_search);
@@ -130,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         // ── FAB → add dialog ─────────────────────────────────────
         fab.setOnClickListener(v -> showTaskDialog(-1, null));
 
+        // ── Help Desk FAB ───────────────────────────────────────
+        fabHelp.setOnClickListener(v -> showHelpDeskDialog());
+
         // ── Settings ─────────────────────────────────────────────
         btnSettings.setOnClickListener(v -> showSettingsDialog());
 
@@ -147,15 +151,83 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         // ── Search Logic ─────────────────────────────────────────
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterTasks(s.toString());
-            }
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+            @Override
+            public void afterTextChanged(Editable s) {    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+        });
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void filterTasks(String query) {
         String lowerQuery = query.toLowerCase();
@@ -168,7 +240,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     boolean matchesTag = true;
                     if (selectedTagFilter != null) {
                         matchesTag = t.getTags().contains(selectedTagFilter);
+                        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
                     }
+                })
+                .show();
+    }
+}
 
                     if (!isTodayFilterActive && selectedFilterDate == null) return matchesQuery && matchesTag;
                     
@@ -187,7 +276,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                         return matchesQuery && matchesTag &&
                                taskCal.get(Calendar.YEAR) == selectedFilterDate.get(Calendar.YEAR) &&
                                taskCal.get(Calendar.DAY_OF_YEAR) == selectedFilterDate.get(Calendar.DAY_OF_YEAR);
+                        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
                     }
+                })
+                .show();
+    }
+}
                 })
                 .collect(Collectors.toList());
         
@@ -196,7 +302,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         sortTasks();
         adapter.notifyDataSetChanged();
         updateMainTagChips();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void updateMainTagChips() {
         com.google.android.material.chip.ChipGroup cg = findViewById(R.id.cg_main_tags);
@@ -205,7 +328,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         java.util.Set<String> allTags = new java.util.HashSet<>();
         for (Task t : taskList) {
             allTags.addAll(t.getTags());
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         cg.removeAllViews();
         for (String tag : allTags) {
@@ -218,12 +358,63 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     selectedTagFilter = null;
                 } else {
                     selectedTagFilter = tag;
-                }
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
                 filterTasks(etSearch.getText().toString());
             });
             cg.addView(chip);
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void startGlowingAnimation(View view, float startY, float endY, int duration) {
         TranslateAnimation anim = new TranslateAnimation(0, 0, startY, endY);
@@ -231,7 +422,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
         view.startAnimation(anim);
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showSettingsDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_settings, null);
@@ -253,15 +461,66 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             if (themes[i].equals(currentTheme)) {
                 spinnerTheme.setSelection(i);
                 break;
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .create();
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         cbNotif.setOnCheckedChangeListener((v, isChecked) -> {
             repository.setNotificationsEnabled(isChecked);
@@ -273,10 +532,61 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 for (Task task : taskList) {
                     if (!task.isCompleted() && task.getAlarmTimeMillis() > now) {
                         alarmScheduler.scheduleTaskAlarm(task, task.getAlarmTimeMillis());
+                        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
                     }
-                }
+                })
+                .show();
+    }
+}
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
                 Toast.makeText(this, "Notifications enabled", Toast.LENGTH_SHORT).show();
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         });
 
         spinnerTheme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -286,10 +596,61 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 if (!selectedTheme.equals(repository.getAppTheme())) {
                     repository.setAppTheme(selectedTheme);
                     applyTheme(selectedTheme);
-                }
-            }
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         });
 
         btnHistory.setOnClickListener(v -> {
@@ -299,7 +660,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         btnClose.setOnClickListener(v -> dialog.dismiss());
         dialog.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void applyTheme(String themeName) {
         View root = findViewById(R.id.main_root_layout);
@@ -315,8 +693,42 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             default:
                 root.setBackgroundResource(R.drawable.bg_gradient);
                 break;
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void showProductivityDashboard() {
         com.google.android.material.bottomsheet.BottomSheetDialog bottomSheet = new com.google.android.material.bottomsheet.BottomSheetDialog(this);
@@ -334,7 +746,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         bottomSheet.setContentView(view);
         bottomSheet.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showShareOptions() {
         String[] options = {"Share as Text", "Export as CSV (Internal)"};
@@ -344,7 +773,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     if (which == 0) shareAsText();
                     else exportAsCsv();
                 }).show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void shareAsText() {
         StringBuilder sb = new StringBuilder("My Tasks:\n");
@@ -352,12 +798,46 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             sb.append(t.isCompleted() ? "[x] " : "[ ] ")
               .append(t.getTitle()).append(" (")
               .append(t.getPriority()).append(")\n");
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, sb.toString());
         startActivity(Intent.createChooser(intent, "Share via"));
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void exportAsCsv() {
         StringBuilder sb = new StringBuilder("ID,Title,Priority,Type,Completed\n");
@@ -367,7 +847,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
               .append(t.getPriority()).append(",")
               .append(t.getType()).append(",")
               .append(t.isCompleted()).append("\n");
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         try {
             java.io.File file = new java.io.File(getExternalFilesDir(null), "tasks_export.csv");
@@ -383,20 +880,88 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             startActivity(Intent.createChooser(intent, "Export CSV"));
         } catch (Exception e) {
             Toast.makeText(this, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void showHistoryDialog() {
         List<Task> history = repository.loadHistory();
         if (history.isEmpty()) {
             Toast.makeText(this, "No history available", Toast.LENGTH_SHORT).show();
             return;
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         String[] taskTitles = new String[history.size()];
         for (int i = 0; i < history.size(); i++) {
             taskTitles[i] = history.get(i).getTitle() + (history.get(i).isCompleted() ? " (Completed)" : " (Deleted)");
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         new AlertDialog.Builder(this)
                 .setTitle("Task History (Last 50)")
@@ -407,7 +972,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 })
                 .setNegativeButton("Close", null)
                 .show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showCalendarDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_calendar, null);
@@ -420,7 +1002,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedFilterDate = Calendar.getInstance();
@@ -440,7 +1039,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         });
 
         dialog.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     // ============================================================
     //  Add / Edit dialog
@@ -466,7 +1082,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 .create();
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         btnDate.setOnClickListener(v -> {
             new android.app.DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
@@ -482,14 +1115,48 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             if (goal.isEmpty()) {
                 etGoal.setError("Tell me your goal for this day");
                 return;
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             generateAISchedule(selectedDate, goal);
             dialog.dismiss();
         });
 
         dialog.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void generateAISchedule(Calendar date, String goal) {
         List<Task> newTasks = new ArrayList<>();
@@ -517,14 +1184,65 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             newTasks.add(createTaskForDate(baseId++, "Important Task 1", "High", "Other", date, 10, 0));
             newTasks.add(createTaskForDate(baseId++, "Personal Errand", "Medium", "Personal", date, 13, 0));
             newTasks.add(createTaskForDate(baseId++, "Review Goals", "Low", "Other", date, 17, 0));
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         for (Task t : newTasks) {
             taskList.add(t);
             if (t.getAlarmTimeMillis() > System.currentTimeMillis()) {
                 alarmScheduler.scheduleTaskAlarm(t, t.getAlarmTimeMillis());
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         repository.saveTasks(taskList);
         filterTasks(etSearch.getText().toString());
@@ -532,7 +1250,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         updateStats();
         
         Toast.makeText(this, "AI: Calendar created for " + newTasks.size() + " tasks!", Toast.LENGTH_LONG).show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private Task createTaskForDate(long id, String title, String priority, String type, Calendar date, int hour, int minute) {
         Calendar cal = (Calendar) date.clone();
@@ -540,7 +1275,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, 0);
         return new Task(id, title, priority, type, false, cal.getTimeInMillis(), "None", null, null);
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showPlanDayDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_plan_day, null);
@@ -554,7 +1306,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 .create();
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         btnVoice.setOnClickListener(v -> {
             etPlanForVoice = etPlan;
@@ -568,13 +1337,47 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             if (plan.isEmpty()) {
                 etPlan.setError("Please type or speak your plan");
                 return;
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             processVoicePlan(plan);
             dialog.dismiss();
         });
 
         dialog.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void processVoicePlan(String input) {
         // Simple "AI" parser for the prototype
@@ -604,25 +1407,144 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                         cal.set(Calendar.SECOND, 0);
                         if (cal.getTimeInMillis() < System.currentTimeMillis()) {
                             cal.add(Calendar.DAY_OF_YEAR, 1);
-                        }
-                        alarmTime = cal.getTimeInMillis();
+                            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception ignored) {}
-            }
+                })
+                .show();
+    }
+}
+                        alarmTime = cal.getTimeInMillis();
+                        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+                } catch (Exception ignored) {    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             // Extract location (very basic)
             if (title.contains(" in ") || title.contains(" at ")) {
                  // Re-check for location if not already used for time
                  // For now, let's just assume if it has "at [Place]" and we didn't parse it as time
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             Task task = new Task(System.currentTimeMillis() + newTasks.size(), 
                                  title, "Medium", "Other", false, alarmTime, "None", null, location);
             newTasks.add(task);
             if (alarmTime > 0) {
                 alarmScheduler.scheduleTaskAlarm(task, alarmTime);
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         taskList.addAll(newTasks);
         repository.saveTasks(taskList);
@@ -631,7 +1553,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         updateStats();
         
         Toast.makeText(this, "AI Planner: Added " + newTasks.size() + " tasks!", Toast.LENGTH_LONG).show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showExerciseRoutingDialog(String location) {
         String[] options = {
@@ -648,11 +1587,45 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 if (which < 3) {
                     Toast.makeText(this, "Routing started: " + options[which], Toast.LENGTH_LONG).show();
                     // In a real app, you would launch Google Maps or an internal navigation fragment here.
-                }
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             })
             .setNegativeButton("Maybe later", null)
             .show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void showTaskDialog(int editPosition, Task existingTask) {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_task, null);
@@ -703,12 +1676,46 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             for (int i = 0; i < existingTask.getTags().size(); i++) {
                 sb.append(existingTask.getTags().get(i));
                 if (i < existingTask.getTags().size() - 1) sb.append(", ");
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             etTags.setText(sb.toString());
 
             for (Task.SubTask st : existingTask.getSubTasks()) {
                 addSubTaskRow(llSubtasks, st);
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             for (int i = 0; i < priorities.length; i++) if (priorities[i].equals(existingTask.getPriority())) spinnerPriority.setSelection(i);
             for (int i = 0; i < types.length; i++) if (types[i].equals(existingTask.getType())) spinnerType.setSelection(i);
@@ -719,8 +1726,42 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 isTimeSet[0] = true;
                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 btnPickTime.setText(getString(R.string.alarm_format, sdf.format(alarmCalendar.getTime())));
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         btnAddSubtask.setOnClickListener(v -> addSubTaskRow(llSubtasks, null));
 
@@ -752,12 +1793,46 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         btnAdd.setOnClickListener(v -> {
             String title = etTitle.getText().toString().trim();
-            if (title.isEmpty()) { etTitle.setError("Required"); return; }
+            if (title.isEmpty()) { etTitle.setError("Required"); return;     private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
             
             List<String> tags = new ArrayList<>();
             for (String s : etTags.getText().toString().split(",")) {
                 if (!s.trim().isEmpty()) tags.add(s.trim());
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             List<Task.SubTask> subtasksList = new ArrayList<>();
             for (int i = 0; i < llSubtasks.getChildCount(); i++) {
@@ -766,7 +1841,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 CheckBox stCb = row.findViewById(R.id.cb_subtask_done);
                 String stTitle = stEt.getText().toString().trim();
                 if (!stTitle.isEmpty()) subtasksList.add(new Task.SubTask(stTitle, stCb.isChecked()));
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             long alarmTime = isTimeSet[0] ? alarmCalendar.getTimeInMillis() : 0;
             if (isEditMode) {
@@ -789,7 +1881,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 newTask.setSubTasks(subtasksList);
                 taskList.add(newTask);
                 if (alarmTime > 0) alarmScheduler.scheduleTaskAlarm(newTask, alarmTime);
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
             filterTasks(etSearch.getText().toString());
             repository.saveTasks(taskList);
@@ -800,7 +1909,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         });
 
         dialog.show();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void addSubTaskRow(LinearLayout container, Task.SubTask subTask) {
         View row = LayoutInflater.from(this).inflate(R.layout.item_subtask_input, container, false);
@@ -811,11 +1937,45 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         if (subTask != null) {
             et.setText(subTask.getTitle());
             cb.setChecked(subTask.isDone());
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         btnRemove.setOnClickListener(v -> container.removeView(row));
         container.addView(row);
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void startVoiceInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -826,8 +1986,42 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             startActivityForResult(intent, VOICE_REQUEST_CODE);
         } catch (Exception e) {
             Toast.makeText(this, "Voice recognition not supported", Toast.LENGTH_SHORT).show();
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void startVoicePlannerInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -838,8 +2032,42 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             startActivityForResult(intent, VOICE_PLANNER_REQUEST_CODE);
         } catch (Exception e) {
             Toast.makeText(this, "Voice recognition not supported", Toast.LENGTH_SHORT).show();
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -848,7 +2076,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             if (result != null && !result.isEmpty() && etTitleForVoice != null) {
                 etTitleForVoice.setText(result.get(0));
-            }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         } else if (requestCode == VOICE_PLANNER_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             if (result != null && !result.isEmpty()) {
@@ -856,18 +2101,120 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     etPlanForVoice.setText(result.get(0));
                 } else {
                     processVoicePlan(result.get(0));
-                }
-            }
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         } else if (requestCode == SOUND_PICKER_CODE && resultCode == RESULT_OK && data != null) {
             android.net.Uri uri = data.getParcelableExtra(android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
             if (uri != null) {
                 selectedSoundUri = uri.toString();
                 if (btnPickSoundInDialog != null) {
                     btnPickSoundInDialog.setText("Sound Selected");
-                }
-            }
-        }
+                    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     // ============================================================
     //  TaskAdapter.OnTaskListener callbacks
@@ -891,7 +2238,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         updateTaskCount();
         updateStats();
         updateWidget();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     @Override
     public void onToggleComplete(int position) {
@@ -909,14 +2273,48 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             repository.saveHistory(history);
         } else if (task.getAlarmTimeMillis() > System.currentTimeMillis()) {
             alarmScheduler.scheduleTaskAlarm(task, task.getAlarmTimeMillis());
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         
         filterTasks(etSearch.getText().toString());
         repository.saveTasks(taskList);
         updateTaskCount();
         updateStats();
         updateWidget();
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void handleRecurrence(Task task) {
         if ("None".equals(task.getRecurrence())) return;
@@ -924,26 +2322,111 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         Calendar next = Calendar.getInstance();
         if (task.getAlarmTimeMillis() > 0) {
             next.setTimeInMillis(task.getAlarmTimeMillis());
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         switch (task.getRecurrence()) {
             case "Daily":   next.add(Calendar.DAY_OF_YEAR, 1); break;
             case "Weekly":  next.add(Calendar.WEEK_OF_YEAR, 1); break;
             case "Monthly": next.add(Calendar.MONTH, 1); break;
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
         Task nextTask = new Task(System.currentTimeMillis(), task.getTitle(), task.getPriority(), 
                 task.getType(), false, next.getTimeInMillis(), task.getRecurrence(), task.getSoundUri(), task.getLocation());
         taskList.add(nextTask);
         if (nextTask.getAlarmTimeMillis() > System.currentTimeMillis()) {
             alarmScheduler.scheduleTaskAlarm(nextTask, nextTask.getAlarmTimeMillis());
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     @Override
     public void onEdit(int position) {
         showTaskDialog(position, filteredList.get(position));
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     // ============================================================
     //  Helpers
@@ -955,7 +2438,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             if (t1.isCompleted() == t2.isCompleted()) return 0;
             return t1.isCompleted() ? 1 : -1;
         });
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     /** Update the "X tasks remaining" counter. */
     private void updateTaskCount() {
@@ -963,17 +2463,68 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
         tvTaskCount.setText(remaining == 1
                 ? "1 task remaining"
                 : remaining + " tasks remaining");
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void updateStats() {
         if (taskList.isEmpty()) {
             tvStats.setText("0% Done");
             return;
-        }
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
         long completed = taskList.stream().filter(Task::isCompleted).count();
         int percent = (int) ((completed * 100) / taskList.size());
         tvStats.setText(percent + "% Done");
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void updateWidget() {
         Intent intent = new Intent(this, TaskWidgetProvider.class);
@@ -982,7 +2533,24 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 .getAppWidgetIds(new android.content.ComponentName(getApplication(), TaskWidgetProvider.class));
         intent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         sendBroadcast(intent);
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -998,9 +2566,60 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     private void checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -1008,9 +2627,60 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, 
                         new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIF_PERMISSION_CODE);
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -1020,7 +2690,75 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Notifications disabled. Enable in settings.", Toast.LENGTH_LONG).show();
-            }
-        }
+                private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+            private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+        private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
+    }
+}
+    private void showHelpDeskDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Help Desk")
+                .setMessage("Need assistance with TaskFlow?\n\nEmail: support@taskflow.com\nPhone: +1 234 567 890\n\nOur support team is available 24/7.")
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Email Support", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+                    intent.setData(android.net.Uri.parse("mailto:support@taskflow.com"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "TaskFlow Support Request");
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
     }
 }
